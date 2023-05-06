@@ -15,6 +15,7 @@ import org.zucc.entity.Issue;
 import org.zucc.entity.User;
 import org.zucc.service.IssueService;
 import org.zucc.service.NumberOfPeopleService;
+import org.zucc.service.OperateService;
 import org.zucc.service.ScoreService;
 
 import javax.annotation.Resource;
@@ -162,7 +163,15 @@ public class TestDao {
         }
 
 
+
     }
 
+    @Autowired
+    private OperateService operateService;
+
+    @Test
+    public void test_3() {
+operateService.update("sss","busA");
+    }
 
 }

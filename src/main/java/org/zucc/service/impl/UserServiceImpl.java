@@ -2,21 +2,18 @@ package org.zucc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zucc.dao.UserDao;
 import org.zucc.entity.Systems;
 import org.zucc.entity.User;
-import org.zucc.service.DeployService;
-import org.zucc.service.ScoreService;
-import org.zucc.service.SystemService;
-import org.zucc.service.UserService;
+import org.zucc.service.*;
 import org.zucc.utils.Constant;
 import org.zucc.utils.SaltUtils;
 import org.zucc.utils.TimeUtils;
@@ -29,36 +26,19 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
 
-    private SystemService systemService;
+    private final SystemService systemService;
 
 
-    private DeployService deployService;
+    private final DeployService deployService;
 
-    private ScoreService scoreService;
+    private final ScoreService scoreService;
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    @Autowired
-    public void setSystemService(SystemService systemService) {
-        this.systemService = systemService;
-    }
-
-    @Autowired
-    public void setDeployService(DeployService deployService) {
-        this.deployService = deployService;
-    }
-
-    @Autowired
-    public void setScoreService(ScoreService scoreService) {
-        this.scoreService = scoreService;
-    }
-
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private final OperateService operateService;
 
     @Override
     public String registerInfo(User user) {
@@ -107,7 +87,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             Subject subject = SecurityUtils.getSubject();
             subject.login(new UsernamePasswordToken(user.getUserName(), user.getPassword()));
 
-            return "index";
+            return handlePage(user.getRole());
         } catch (UnknownAccountException e) {
             e.printStackTrace();
             System.out.println("用户名错误！");
@@ -146,10 +126,21 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         //初始化系统人数
         systemService.initSystem(system);
         //初始化公交地铁和活动
+        operateService.initOperate(system);
         //初始化部署人数
         deployService.initDeploy(system);
         //初始化人数
         scoreService.initScore(system);
+    }
+
+    private String handlePage(String role) {
+        return switch (role) {
+            case "公安", "交警", "城管", "志愿者" -> "police";
+            case "市民" -> "role";
+            case "主办单位" -> "sponsor";
+            case "公交地铁" -> "subway";
+            default -> "index";
+        };
     }
 
 

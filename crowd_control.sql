@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 05/05/2023 22:33:43
+ Date: 06/05/2023 22:19:47
 */
 
 SET NAMES utf8mb4;
@@ -213,6 +213,31 @@ INSERT INTO `number_of_people_init` VALUES (6, '仁和里', 1680, 120.162555, 30
 INSERT INTO `number_of_people_init` VALUES (7, '东坡里', 3620, 120.163585, 30.252126, 43396, '学士里;龙翔里;仁和里;将军里;泗水里', 'green', NULL);
 INSERT INTO `number_of_people_init` VALUES (8, '将军里', 2400, 120.162707, 30.249315, 47562, '东坡里;泗水里', 'green', NULL);
 INSERT INTO `number_of_people_init` VALUES (9, '泗水里', 2550, 120.165169, 30.249562, 38837, '东坡里;将军里', 'green', NULL);
+
+-- ----------------------------
+-- Table structure for operate
+-- ----------------------------
+DROP TABLE IF EXISTS `operate`;
+CREATE TABLE `operate`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `systemName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `statusActivity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `subwayA` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `subwayB` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `subwayC` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `subwayD` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `busA` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `busB` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `busC` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  `busD` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of operate
+-- ----------------------------
+INSERT INTO `operate` VALUES (1, '系统6841', '1', '1', '1', '1', '1', '0', '1', '1', '1');
+INSERT INTO `operate` VALUES (2, '系统7065', '1', '1', '1', '1', '1', '0', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for question_choice
