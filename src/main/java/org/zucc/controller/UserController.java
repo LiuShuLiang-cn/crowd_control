@@ -1,21 +1,16 @@
 package org.zucc.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.zucc.dao.UserDao;
 import org.zucc.entity.User;
 import org.zucc.service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -51,19 +46,28 @@ public class UserController {
             获取当前登录的用户
          */
         try {
-            User currentUser = userService.getUserByName(
+            return userService.getUserByName(
                     ((User) httpSession.getAttribute("currentUser"))
                             .getUserName()
             );
-            return currentUser;
-        }catch (NullPointerException e){
-            log.error("Error! No login.");
+        } catch (NullPointerException e) {
+            log.error("没有登录，无法获取当前用户信息");
             return new User();
         }
     }
 
     @GetMapping("/index")
-    public String Index(){
+    public String Index() {
         return "index";
+    }
+
+    @GetMapping("/question")
+    public String getQuestion() {
+        return "question";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/user/login";
     }
 }

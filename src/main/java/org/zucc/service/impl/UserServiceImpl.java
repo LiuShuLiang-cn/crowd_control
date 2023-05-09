@@ -86,7 +86,6 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             httpSession.setAttribute("currentUser", user);
             Subject subject = SecurityUtils.getSubject();
             subject.login(new UsernamePasswordToken(user.getUserName(), user.getPassword()));
-
             return handlePage(user.getRole());
         } catch (UnknownAccountException e) {
             e.printStackTrace();

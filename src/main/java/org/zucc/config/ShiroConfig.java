@@ -2,7 +2,6 @@ package org.zucc.config;
 
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.util.ThreadContext;
@@ -37,18 +36,15 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //给filter设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-        //配置系统受限资源
-        //配置系统公共系统
         Map<String, String> map = new HashMap<String, String>();
-        //anon 设置为公共资源
-        map.put("/operate/main", "anon");
         //anon 设置为公共资源
         map.put("/user/**", "anon");
         map.put("/system/list", "anon");
-        //anon 设置为公共资源
-        map.put("/asserts/**", "anon");
+        map.put("/static/**", "anon");
         //authc 请求这个资源需要认证和授权
         map.put("/**", "authc");
+        map.put("/user/currentuser", "authc");
+        map.put("/user/index","authc");
         //默认认证界面路径
         shiroFilterFactoryBean.setLoginUrl("/user/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
@@ -73,13 +69,13 @@ public class ShiroConfig {
     @Bean
     public Realm getRealm() {
         CustomerRealm customerRealm = new CustomerRealm();
-        ////修改凭证校验匹配器
-        //HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-        ////设置加密算法为md5
-        //credentialsMatcher.setHashAlgorithmName("MD5");
-        ////设置散列次数
-        //credentialsMatcher.setHashIterations(1024);
-        //customerRealm.setCredentialsMatcher(credentialsMatcher);
+//        //修改凭证校验匹配器
+//        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+//        //设置加密算法为md5
+//        credentialsMatcher.setHashAlgorithmName("MD5");
+//        //设置散列次数
+//        credentialsMatcher.setHashIterations(1024);
+//        customerRealm.setCredentialsMatcher(credentialsMatcher);
         return customerRealm;
     }
 }
