@@ -1,9 +1,7 @@
 package org.zucc.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.zucc.entity.Issue;
 import org.zucc.service.IssueService;
 
@@ -17,6 +15,14 @@ public class IssuesController {
     @RequestMapping("/issue/{role}")
     @ResponseBody
     public Issue getIssue(@PathVariable("role") String role) {
+
         return issueService.getIssue(role);
+    }
+
+    @GetMapping("/issue/count")
+    @ResponseBody
+    public int getIssueCount(@RequestParam("systemName") String systemName,
+                             @RequestParam("roleTopic") String roleTopic) {
+        return issueService.getCount(systemName, roleTopic);
     }
 }

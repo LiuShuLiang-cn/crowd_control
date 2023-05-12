@@ -66,6 +66,7 @@ public class WebSocketListener {
         Systems systems = systemDao.getSystemBySystemName(user.getSystemname());
         systems.setUsername(sessionConnectedEvent.getUser() + "-");
         systemDao.updateById(systems);
+
         recordService.loginRecord(user.getSystemname(), user.getUserName());/*记录一下登陆时间*/
     }
 
@@ -102,10 +103,10 @@ public class WebSocketListener {
             subject.logout();
         }
         recordService.logoutRecord(sysname, user.getUserName());/*记录一下退出时间*/
-
         redisTemplate.delete(sysname + "_NumberOfPeople");
         redisTemplate.delete(sysname + "_Deploys");
         redisTemplate.delete(sysname + "_Time");
+        redisTemplate.delete(sysname + "-" + user.getSystemname());
 
         log.info("系统退出！");
     }

@@ -5,4 +5,6 @@ import org.zucc.entity.Issue;
 
 public interface IssueService extends IService<Issue> {
     Issue getIssue(String role);
+
+    int getCount(String systemName, String roleTopic);
 }

@@ -11,7 +11,6 @@ import org.zucc.service.ScoreService;
 @RequestMapping(("/score"))
 @ResponseBody
 public class ScoreController {
-
     ScoreService scoreService;
 
     @Autowired
@@ -31,10 +30,10 @@ public class ScoreController {
         return scoreService.getCurrentScore(systemName,roleTopic);
     }
 
-    @GetMapping("/update/{systemName}/{roleTopic}/{score}")
-    public Score UserScore(@PathVariable("systemName") String systemName,
-                           @PathVariable("roleTopic") String roleTopic,
-                           @PathVariable("score") int score) {
+    @GetMapping("/update")
+    public Score UserScore(@RequestParam("systemName") String systemName,
+                           @RequestParam("roleTopic") String roleTopic,
+                           @RequestParam("score") int score) {
         return scoreService.setCurrentScore(systemName, roleTopic, score);
     }
 }

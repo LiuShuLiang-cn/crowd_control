@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.zucc.dao.ScoreDao;
 import org.zucc.entity.Score;
 import org.zucc.service.ScoreService;
+
+import javax.annotation.Resource;
 
 
 @Service
@@ -15,7 +18,8 @@ import org.zucc.service.ScoreService;
 public class ScoreServerImpl extends ServiceImpl<ScoreDao, Score> implements ScoreService {
 
     private ScoreDao scoreDao;
-
+    @Resource
+    private RedisTemplate redisTemplate;
     @Autowired
     public void setScoreDao(ScoreDao scoreDao) {
         this.scoreDao = scoreDao;
@@ -68,7 +72,23 @@ public class ScoreServerImpl extends ServiceImpl<ScoreDao, Score> implements Sco
             log.debug("扣分：" + String.valueOf(score.getScore() - fraction));
         }
         baseMapper.updateById(score);
+        countIssue(systemName, roleTopic);
         return score;
+    }
+
+    private void countIssue(String systemName, String roleTopic) {
+        /*
+        记录答对题目数量
+         */
+        int count;
+        try {
+            count = (int) redisTemplate.opsForValue().get(systemName + "-" + roleTopic);
+        } catch (java.lang.NullPointerException e) {
+            count=0;
+        }
+        count++;
+        redisTemplate.opsForValue().set(systemName + "-" + roleTopic, count);
+        log.info("已完成{}道题目",count);
     }
 
     private Score getScoreBySystemRole(String systemName, String roleTopic) {

@@ -29,4 +29,5 @@ public class OperateController {
         operateService.update(systemName,activate,status);
         return "switch";
     }
+
 }
