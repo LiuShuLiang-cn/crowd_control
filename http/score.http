@@ -1,0 +1,19 @@
+
+### 获取当前系统角色的分数
+GET http://{{host}}/score/current/系统6841/指挥中心
+//                       /current/{systemName}/{roleTopic}
+Accept: application/json
+Content-Type: application/json
+Cookie: {{Cookie}}
+
+### 把statue设置为20，请求该链接会加5分
+GET http://{{host}}/score/系统6841/指挥中心/20
+//                       /{systemName}/{roleTopic}/{statue}
+Content-Type: application/json
+Cookie: {{Cookie}}
+
+### 自定义系统角色的分数
+GET http://{{host}}/score/update?roleTopic=指挥中心&systemName=系统6841&score=25
+Accept: application/json
+Content-Type: application/json
+Cookie: {{Cookie}}

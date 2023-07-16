@@ -15,7 +15,6 @@ public class IssuesController {
     @RequestMapping("/issue/{role}")
     @ResponseBody
     public Issue getIssue(@PathVariable("role") String role) {
-
         return issueService.getIssue(role);
     }
 

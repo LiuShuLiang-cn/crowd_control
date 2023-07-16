@@ -133,13 +133,21 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     private String handlePage(String role) {
-        return switch (role) {
-            case "公安", "交警", "城管", "志愿者" -> "police";
-            case "市民" -> "role";
-            case "主办单位" -> "sponsor";
-            case "公交地铁" -> "subway";
-            default -> "index";
-        };
+        switch (role) {
+            case "公安":
+            case "交警":
+            case "城管":
+            case "志愿者":
+                return "police";
+            case "市民":
+                return "role";
+            case "主办单位":
+                return "sponser";
+            case "公交地铁":
+                return "subway";
+            default:
+                return "index";
+        }
     }
 
 

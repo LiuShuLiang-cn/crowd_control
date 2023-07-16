@@ -65,10 +65,18 @@ public class DeployServiceImpl extends ServiceImpl<DeployDao, Deploy> implements
         部署人员
          */
         switch (deployVo.getRole()) {
-            case "志愿者" -> deployDao.updateZyz(deployVo);
-            case "城管" -> deployDao.updateCg(deployVo);
-            case "交警" -> deployDao.updateJj(deployVo);
-            case "公安" -> deployDao.updateGa(deployVo);
+            case "志愿者":
+                deployDao.updateZyz(deployVo);
+                break;
+            case "城管":
+                deployDao.updateCg(deployVo);
+                break;
+            case "交警":
+                deployDao.updateJj(deployVo);
+                break;
+            case "公安":
+                deployDao.updateGa(deployVo);
+                break;
         }
         List<Deploy> deploys = deployDao.getNumBySys(deployVo.getSystemName());
         redisTemplate.opsForValue().set(deployVo.getSystemName() + "_Deploys", deploys);

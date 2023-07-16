@@ -1,516 +1,564 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Index Page</title>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-    <!-- websocket通讯 -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>智慧步行街</title>
+    <!-- css文件 -->
+    <link href="/static/css/style.css" rel="stylesheet"/>
+    <link href="/static/css/layui.css" rel="stylesheet">
+    <!-- js文件 -->
+    <script src="/static/layui/layui.js" type="text/javascript"></script>
+    <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"></script>
+    <script src="https://lib.baomitu.com/echarts/5.0.2/echarts.common.js"></script>
     <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+     <script src="/static/js/chat.js" type="text/javascript"></script>
+    <script src="/static/js/dropdown.js" type="text/javascript"></script>
+    <script src="/static/js/form.js"></script>
+    <script src="/static/js/operate.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-<p>你好，欢迎进入主页面，请开始实验！</p>
-<p shiro:hasRole="指挥中心">指挥中心</p>
-<p class="showTime"></p>
-
-<div class="table">
-    <table border="1" style="text-align:center" id="table">
-        <tr>
-            <th>区域</th>
-            <th>人数</th>
-            <th>经度</th>
-            <th>纬度</th>
-            <th>面积</th>
-            <th>邻近区域</th>
-            <th>状态</th>
-            <th>系统</th>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A2</td>
-            <td>456</td>
-            <td>b</td>
-            <td>b@qq.com</td>
-            <td>987654321</td>
-            <td>30030033</td>
-            <td>470205197405213513</td>
-        </tr>
-        <tr>
-            <td>A3</td>
-            <td>789</td>
-            <td>c</td>
-            <td>c@qq.com</td>
-            <td>800800820</td>
-            <td>30030030</td>
-            <td>570205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-    </table>
-</div>
-
-<div class="tableDeploy">
-    <table border="1" style="text-align:center" id="tableDeploy">
-        <tr>
-            <th>公安</th>
-            <th>交警</th>
-            <th>城管</th>
-            <th>志愿者</th>
-            <th>纬度</th>
-            <th>经度</th>
-            <th>系统</th>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
-        <tr>
-            <td>A1</td>
-            <td>123</td>
-            <td>a</td>
-            <td>a@qq.com</td>
-            <td>123456789</td>
-            <td>40040044</td>
-            <td>270205197405213513</td>
-        </tr>
 
 
-    </table>
-</div>
+<section class="content">
+    <!-- 头部样式 -->
+    <header class="top">
+        <h1 style="text-align: center;margin-top: 15px; font-size: 25px;">湖滨商圈跨年夜人流精细化管理虚拟仿真实验</h1>
+        <div class="showTime" style="position: absolute; right: 180px; top: 20px;"></div>
+        <div class="dropdown">
+            <button onclick="dropdown()" class="dropbtn" >
+                <img src="/static/img/cr7.jpg">
+                <p id="roleContent">111</p>
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#">System</a>
+                <a href="#">Setting</a>
+                <a href="login.html">Log Out</a>
+            </div>
+        </div>
+    </header>
+    <!-- 地图整体布局 -->
+    <div class="layui-col-md12 layui-col-xs12" style="height: 100%" id="container">
 
-<div id="responseData">
-    <h4>聊天区</h4>
-    <input id="content">
-    <button shiro:hasRole="交警" onclick="sendMsg('指挥中心',1)">发给交警</button>
-    <button shiro:hasRole="指挥中心" onclick="sendMsg('交警',1)">发给交警</button>
-</div>
+    </div>
+    <!-- 两侧图标及事件 -->
+    <div class="layui-fluid" style="height: 100%;position: absolute;top: 70px;">
+        <div class="layui-row layui-col-space10" style="height: 100%">
+            <!-- 左侧 -->
+            <div id="leftChart" class="layui-col-md2 layui-col-xs2" >
+                <!-- 图表一 -->
+                <div class="layui-col-md12 layui-col-xs12" style="height: 33.3%">
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 14%;">
+                        <h3>湖滨九里实时人流变化态势</h3></div>
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 85%;width: 100%" id="realTime-stream-line"></div>
+                </div>
+                <!-- 图表二 -->
+                <div class="layui-col-md12 layui-col-xs12" style="height: 33.3%">
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 14%;">
+                        <h3>湖滨九里每日峰值人流恢复监测</h3>
+                    </div>
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 85%" id="day-stream-line" ></div>
+                </div>
+                <!-- 图表三 -->
+                <div class="layui-col-md12 layui-col-xs12" style="height: 33.3%">
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 14%;">
+                        <!-- style="height: 15%;margin-bottom: 8px;background: #3c82b8;display: inline-block;"> -->
+                        <h3 class="layui-col-md12 layui-cols-xs12" >
+                            天气预测情况
+                        </h3>
+                        <!-- <div class="layui-tab layui-tab-brief layui-col-md4 layui-col-xs4"
+                             style="float: right;margin-right: 5px;">
+                            <ul class=" layui-tab-title layui-col-md12 layui-col-xs12">
+                                <li id="subHour" class=" layui-this layui-col-md4 layui-col-xs4">小时</li>
+                                <li id="subDay" class="layui-col-md4 layui-col-xs4">日</li>
+                                <li id="subMon" class="layui-col-md4 layui-col-xs4">月</li>
+                            </ul>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- 中间4块内容 -->
+            <div class="layui-row layui-col-space20 layui-col-md7 layui-col-xs7 ">
+                <div type="button" class="managebutton" tabindex="1">
+                    <div  onclick="checkFountain()">音乐喷泉</div>
+                </div>
+                <div type="button" class="managebutton" tabindex="2">
+                    <div>事件管理</div>
+                </div>
+                <div class="button" tabindex="3">
+                    <div >地域管理</div>
+                </div>
+                <div id="person">
+                    <div id="personCount"><p>湖滨九里实时人数</p>
+                        <div id="count" style="top:-16px;position: relative">111</div>
+                    </div>
+                    <div id="personCount1"><p>地铁站实时人数<br />2222人</p></div>
+                </div>
+                <div class="button" tabindex="4" >
+                    <div onclick="personManager()">人流管理</div>
+                </div>
+                <!-- 地域管理可以是显示各角色部署人数或者别的情况 -->
+                <!-- 显示当前路口部署情况 -->
+                <div id="road_msg" >
+                    <img src="/static/img/交警现场.png"/>
+                    <span>当前交通道路口已部署156人数<br></span>
+                    <span>目前人流秩序较为稳定，不易发生踩踏事件</span>
+                </div>
+            </div>
+            <!-- 右侧图标 -->
+            <div id="rightChart" class="layui-col-md3 layui-col-xs3">
+                <div class="layui-col-md12 layui-col-xs12" style="height: 40%;background-color: #ffffff;" >
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 6%; top: 5px;width: 100%;">
+                        <h3>指挥面板</h3>
+                        <div class="layui-form-item" style="top: 10px;left: 15px;position: relative;height: 38px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-megaphone" viewBox="0 0 16 16">
+                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975 1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z"/>
+                            </svg> 部署及广播指令
+                        </div>
+<!--                         部署指令 -->
+                        <div id="conversationDiv" >
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/公安.png" alt="">
+                                    <span>公安</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form" >部署</button>
+                                <label style="width: 19px;"></label>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/城管.png" alt="">
+                                    <span>城管</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form" >部署</button>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/交警队.png" alt="">
+                                    <span>交警</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form" >部署</button>
+                                <label style="width: 19px;"></label>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/群众.png" alt="">
+                                    <span>市民</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form">部署</button>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/主办方.png" alt="">
+                                    <span>主办方</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form">部署</button>
+                                <label style="width: 2px;"></label>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/志愿者.png" alt="">
+                                    <span>志愿者</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form">部署</button>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <img src="/static/img/地铁.png" alt="">
+                                    <span>地铁中心</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" subway-active="subway-form" >部署</button>
+                                <label style="width: 10px;"></label>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="layui-input-inline">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-check" viewBox="0 0 16 16">
+                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855a.75.75 0 0 0-.124 1.329l4.995 3.178 1.531 2.406a.5.5 0 0 0 .844-.536L6.637 10.07l7.494-7.494-1.895 4.738a.5.5 0 1 0 .928.372l2.8-7Zm-2.54 1.183L5.93 9.363 1.591 6.602l11.833-4.733Z"/>
+                                        <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/></svg>
+                                    <span>群发</span>
+                                </label>
+                                <button id="btn_form" class="layui-btn layui-btn-primary layui-border-blue" test-active="test-form" >部署</button>
+                            </div>
+                            <!-- <button type="button" class="layui-btn layui-btn-primary layui-border-red layui-btn-sm" id="sendMsg5" onclick="sendMsg('zhiyuan','sendmsg');"  style="position: relative;left: 40px;">发给主办方</button> -->
+                        </div>
 
-<p>指令：</p>
-<select id="directives">
-    <option value="命令一">命令一</option>
-    <option value="命令二">命令二</option>
-    <option value="命令三">命令三</option>
-</select>
-<button shiro:hasRole="指挥中心" onclick="sendMsg('交警',2)">发布命令</button>
+                        <!-- <label class="layui-form-label" style="position: absolute;float: left;margin-top: 105px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-index-thumb" viewBox="0 0 16 16">
+                          <path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 0 0 1 0V6.435l.106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 1 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.118a.5.5 0 0 1-.447-.276l-1.232-2.465-2.512-4.185a.517.517 0 0 1 .809-.631l2.41 2.41A.5.5 0 0 0 6 9.5V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v6.543L3.443 6.736A1.517 1.517 0 0 0 1.07 8.588l2.491 4.153 1.215 2.43A1.5 1.5 0 0 0 6.118 16h6.302a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
+                        </svg>部署指令</label> -->
+                        <!-- 交通情况 -->
+                        <div class="layui-btn-container" >
+                            <button id="addOverlayGroup" class="layui-btn layui-btn-primary layui-border-blue" onclick="openRoadMsg()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stoplights" viewBox="0 0 16 16">
+                                <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm1.5 2.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                <path d="M4 2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2h2c-.167.5-.8 1.6-2 2v2h2c-.167.5-.8 1.6-2 2v2h2c-.167.5-.8 1.6-2 2v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1c-1.2-.4-1.833-1.5-2-2h2V8c-1.2-.4-1.833-1.5-2-2h2V4c-1.2-.4-1.833-1.5-2-2h2zm2-1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/>
+                            </svg>查看路口</button>
+                            <button id="removeOverlayGroup" class="layui-btn layui-btn-primary layui-border-blue"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg> 取消</button>
+                        </div>
 
-<div id="Directives" shiro:hasRole="交警">代办区：</div>
+                    </div>
+                </div>
 
-<p>部署人员：</p>
-<select id="deploy_area">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-    <option value="13">13</option>
-</select>
-<input th:value="peoplenum" id="deploy_num"></input>
-<button onclick="deploy()">部署</button>
+                <div class="layui-col-md12 layui-col-xs12" style="height: 64%" id="month-stream-line">
+                    <div class="layui-col-md12 layui-col-xs12" style="height:40px;">
+                        <h3 style="width: 100%;">
+                            事件记录</h3>
+                    </div>
 
+                    <div class="layui-col-md12 layui-col-xs12" style="height: 86%;background: white" >
+                        <div>
+                            <p id="responseData"></p>
 
-<div id="Question">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-</div>
+<!-- 导入地图 -->
+<script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=a4e65c332b50b8e393abedd74d525dd5&plugin=AMap.Scale"></script>
+<!-- UI组件库 1.0 突出湖滨地区，隐藏建筑物 -->
+<script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+<!-- 预加载iconfont的js 图标-->
+<script src="//webapi.amap.com/ui/1.1/ui/overlay/SvgMarker/examples/my-iconfont.js?v=1.0.11"></script>
 
-<script>
-
-
-    var stompClient = null;
-    var username;
-    var systemname;
-    var roleTopic;
-
-    $.get("/user/currentuser", function (data) {
-        roleTopic = data.role
-        username = data.userName;
-        systemname = data.systemname;
-        // 执行定时任务
-        var myTimeTarget = setInterval(function () {
-            queryData()
-        }, 1000);
-
-        // 定时任务要做的事情
-        function queryData() {
-            $.get("/data/" + systemname, function (data) {
+<script th:inline=none>
+    document.getElementById("roleContent").innerHTML=roleTopic;
+    var buildingLayer = new AMap.Buildings({ zIndex: 130, merge: false, sort: false, zooms: [17, 20] });
+    var map = new AMap.Map("container", {
+        viewMode: '3D',
+        zoom: 17,
+        zooms: [17, 20],
+        pitch: 60,
+        rotation: 0,
+        center: [120.1636, 30.251918],
+        resizeEnable: true,
+        dragEnable: true,
+        zoomEnable: true,
+        rotateEnable: true,
+        showLabel: false, //不显示地图文字标记
+        features: ['bg', 'point', 'road'],
+        layers: [
+            new AMap.TileLayer(),
+            buildingLayer,
+        ],
+        scrollWheel: false,
+        mapStyle: 'amap://styles/3ca2e04069298d6b0b6b166e94803313',
+    });
+    var cnt =0;
+    let index = 0;
+    var marker = new AMap.Marker({
+        position: new AMap.LngLat(120.160989, 30.253953),
+        icon: '/static/img/fountain.png',
+        offset: new AMap.Pixel(-20, -30)
+    });
+    var viaMarker = new AMap.Marker({
+        position: new AMap.LngLat(120.160989, 30.253953),
+        // 将一张图片的地址设置为 icon
+        icon: '/static/img/fountain_close.png',
+        // 设置了 icon 以后，设置 icon 的偏移量，以 icon 的 [center bottom] 为原点
+        offset: new AMap.Pixel(-20, -30)
+    });
+    function checkFountain() {
+        map.add(marker);
+        map.add(viaMarker);
+        if(cnt%2==0){
+            // 喷泉图标的显示(根据状态修改喷泉开关状态)
+            $.get("/operate/"+systemname+"/", function (res){
+                activity = res.statusActivity;
+                if(activity==1){
+                    var info = [];
+                    info.push("<div style=\"float:left;width:140px;height:25px;text-align:center\"></div> ");
+                    info.push("<p class='input-item'>当前音乐喷泉已开启</p>");
+                    infoWindow = new AMap.InfoWindow({
+                        content: info.join("")  //使用默认信息窗体框样式，显示信息内容
+                    });
+                    infoWindow.open(map, new AMap.LngLat(120.159477,30.255288));
+                    viaMarker.setMap(null);
+                }
+                else{
+                    var info = [];
+                    info.push("<div style=\"float:left;width:140px;height:25px;text-align:center\"></div> ");
+                    info.push("<p class='input-item'>当前音乐喷泉已关闭</p>");
+                    infoWindow = new AMap.InfoWindow({
+                        content: info.join("")  //使用默认信息窗体框样式，显示信息内容
+                    });
+                    infoWindow.open(map, new AMap.LngLat(120.159477,30.255288));
+                    marker.setMap(null);
+                }
             })
-            $.get("/system/time/" + systemname, function (data) {
-                $(".showTime").html(
-                    "当前时间：" + data
-                )
-            })
+        }else {
+            marker.setMap(null);
+            viaMarker.setMap(null);
+            infoWindow.close();
         }
+        cnt++;
 
-        var socket = new SockJS("http://localhost:8015/public");
-        stompClient = Stomp.over(socket);
-        stompClient.connect({"username": username, "roleTopic": roleTopic}, function (frame) {
-            stompClient.subscribe('/topic/' + systemname + "/" + roleTopic, function (response) {
-                data = JSON.parse(response.body);
-                showMsg(data);
-            })
-            stompClient.subscribe('/data/' + systemname, function (response) {
-                data = JSON.parse(response.body);
-                insertInfo(data);
-            })
-        }, {});
+    }
 
-        $.get("/chat/all/todo/", function (data2) {
-            /*
-            展示所有的待办
-             */
-            daiban(data2);
-        })
-        $.get("/issue/" + roleTopic, function (data3) {
-            console.log(data3);
-            show_question(data3);
-        });
+    function getGridLngLats(center, colNum, size, cellX, cellY) {
+        var pxCenter = map.lnglatToPixel(center);
+        var rowNum = Math.ceil(size / colNum);
+        var startX = pxCenter.getX(),
+            startY = pxCenter.getY();
+        cellX = cellX || 70;
+        cellY = cellY || 70;
+        var lngLats = [];
+        for (var r = 0; r < rowNum; r++) {
+            for (var c = 0; c < colNum; c++) {
+                var x = startX + (c - (colNum - 1) / 2) * (cellX);
+                var y = startY + (r - (rowNum - 1) / 2) * (cellY);
+                lngLats.push(map.pixelToLngLat(new AMap.Pixel(x, y)));
+                if (lngLats.length >= size) {
+                    break;
+                }
+            }
+        }
+        return lngLats;
+    }
+    // 地图样式修改+路线
+    var options =
+        {
+            hideWithoutStyle: false,//是否隐藏设定区域外的楼块
+            areas: [{ //围栏1:钱塘里
+                visible: false,//是否可见
+                rejectTexture: true,//是否屏蔽自定义地图的纹理
+                color1: '#123A51',//楼顶颜色
+                color2: '#123A51',//楼面颜色
+                path: [[120.158727, 30.258187], [120.158824, 30.257825], [120.158894, 30.257686], [120.15919, 30.257242], [120.159535, 30.2567], [120.159792, 30.256838], [120.159928, 30.256865], [120.162604, 30.256971], [120.16212, 30.257677], [120.161692, 30.258265], [120.158727, 30.258187]],
+            }, { //围栏2：长生里
+                visible: false,//是否可见
+                rejectTexture: true,//是否屏蔽自定义地图的纹理
+                color1: '#123A51',//楼顶颜色
+                color2: '#123A51',//楼面颜色
+                path: [[120.161691, 30.258263], [120.162321, 30.257394], [120.162608, 30.256964], [120.162739, 30.256673], [120.162797, 30.256506], [120.162844, 30.256068], [120.162868, 30.255538], [120.163513, 30.255564], [120.163983, 30.255533], [120.163845, 30.25834], [120.161691, 30.258263]],
+            },
+                { //围栏3：劝业里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.159535, 30.2567], [120.159723, 30.256449], [120.159991, 30.256021], [120.160426, 30.255399], [120.160962, 30.255449], [120.161767, 30.255497], [120.162291, 30.255515], [120.162871, 30.255542], [120.162847, 30.256083], [120.162813, 30.256387], [120.162796, 30.25651], [120.162754, 30.256639], [120.162606, 30.256974], [120.159939, 30.256873], [120.159864, 30.256855], [120.15979, 30.256843], [120.159656, 30.256778], [120.159535, 30.2567]],
+                },
+                { //围栏4：学士里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.160426, 30.255399], [120.160052, 30.255294], [120.160244, 30.254972], [120.160396, 30.254745], [120.160864, 30.254064], [120.160887, 30.253976], [120.160869, 30.253896], [120.160858, 30.253817], [120.160981, 30.253778], [120.161085, 30.253721], [120.161243, 30.253763], [120.161505, 30.253895], [120.162902, 30.253965], [120.162866, 30.255539], [120.16176, 30.255494], [120.160966, 30.255445], [120.160426, 30.255399]],
 
+                },
+                { //围栏5：龙翔里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.162869, 30.255537], [120.162866, 30.255539], [120.162903, 30.253962], [120.163085, 30.253999], [120.164052, 30.254045], [120.163991, 30.255534], [120.163513, 30.255565], [120.16286, 30.255538]],
+                },
+                { //围栏6：仁和里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.1615, 30.253893], [120.16118, 30.253717], [120.161472, 30.253302], [120.161691, 30.252994], [120.161953, 30.252569], [120.162424, 30.251797], [120.162447, 30.251745], [120.162467, 30.251711], [120.162502, 30.251579], [120.162521, 30.251466], [120.163016, 30.25156], [120.16298, 30.252329], [120.162983, 30.252754], [120.162936, 30.253663], [120.162901, 30.253971], [120.1615, 30.253893]],
+                },
+                { //围栏7：东坡里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.162902, 30.253965], [120.162941, 30.253674], [120.162989, 30.25275], [120.162981, 30.252332], [120.163013, 30.251545], [120.163013, 30.250886], [120.163, 30.250751], [120.162968, 30.250656], [120.163251, 30.250533], [120.163406, 30.250503], [120.164225, 30.250435], [120.164048, 30.254043], [120.163082, 30.254001], [120.162902, 30.253965]],
+                },
+                { //围栏8：将军里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.164217, 30.250328], [120.163954, 30.250289], [120.163336, 30.250252], [120.163182, 30.250263], [120.162963, 30.250237], [120.1622, 30.249894], [120.162034, 30.249862], [120.161757, 30.249711], [120.161416, 30.24944], [120.161112, 30.249084], [120.160823, 30.248566], [120.161534, 30.248557], [120.162205, 30.24857], [120.163088, 30.248591], [120.164266, 30.248602], [120.164207, 30.249507], [120.164217, 30.250328]],
+                },
+                { //围栏9：泗水里
+                    visible: false,//是否可见
+                    rejectTexture: true,//是否屏蔽自定义地图的纹理
+                    color1: '#123A51',//楼顶颜色
+                    color2: '#123A51',//楼面颜色
+                    path: [[120.164301, 30.250335], [120.164342, 30.248594], [120.166338, 30.248584], [120.166357, 30.250424], [120.164301, 30.250335]],
+                },
+            ]
+        };
+    buildingLayer.setStyle(options); //此配色优先级高于自定义mapStyle
+    map.addControl(new AMap.Scale())
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[0].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[1].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[2].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[3].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[4].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[5].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[6].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[7].path,
+        map: map
+    })
+    new AMap.Polygon({
+        bubble: true,
+        fillOpacity: 0,
+        fillColor: '#123A51',
+        strokeWeight: 6,
+        strokeColor: "#2b8ae5",
+        path: options.areas[8].path,
+        map: map
     })
 
-    function deploy() {
-        var area = document.getElementById('deploy_area').value;
-        var num = document.getElementById('deploy_num').value;
-        var imessage = {};
-        imessage.systemName = systemname;
-        imessage.num = num;
-        imessage.role = "交警";
-        imessage.lng = 120.164273;
-        imessage.lat = 30.248522;
-        stompClient.send("/directives/deploy", {}, JSON.stringify(imessage));
-    }
+    // 查看十字路口人流情况
+    $('#addOverlayGroup').click(function(){
+        console.log("点击了查看路口按钮")
+        var lnglats = [[120.164273,30.248522],[120.166338,30.249134],[120.166327,30.250394],[120.162964,30.250237],[120.164208,30.250316],[120.158726,30.258179],[120.161741,30.258193],[120.163854,30.258351],[120.163951,30.257021],[120.162615,30.256932],[120.162894,30.255561],[120.162878,30.253996],[120.162968,30.25275]];
+        var zyzlnglats=[[120.15944,30.257612],[120.162578,30.257766],[120.160426,30.256189],[120.161215,30.254513],[120.163134,30.255207],[120.162063,30.25346],[120.163193,30.251309],[120.162207,30.249034],[120.164767,30.249057]];
+        // var galnglats=[[120.159826,30.257627],[120.162974,30.257735],[120.161051,30.256253],[120.161659,30.254556],[120.163132,30.254459],[120.162262,30.252864],[120.163538,30.251309],[120.162645,30.249034],[120.165236,30.249022]];
+        var markers = [];
+        var weizhi=[120.165056,30.254991];
+        // 代表公安、城管、交警
+        var startIcon = new AMap.Icon({
+            // 图标尺寸
+            size: new AMap.Size(25, 25),
+            // 图标的取图地址
+            image: "/static/img/交警.png",
+            // 图标所用图片大小
+            imageSize: new AMap.Size(25, 25),
+            // imageOffset:new AMap.Pixel(0, 0),
+        });
+        // 志愿者图标
+        var zyzIcon = new AMap.Icon({
+            size: new AMap.Size(26, 26),
+            image: "/static/img/volunteer.png",
+            imageSize: new AMap.Size(26, 26),
+        });
+        for (var i = 0; i < lnglats.length; i++) {
+            var lnglat = lnglats[i];
+            // 创建点实例
+            var marker = new AMap.Marker({
+                position: new AMap.LngLat(lnglat[0], lnglat[1]),
+                icon:startIcon,
+            });
+            marker.on('click',openInfo);
+            markers.push(marker);
+        };
+        for (var i = 0; i < zyzlnglats.length; i++) {
+            var lnglat = zyzlnglats[i];
+            // 创建点实例
+            var marker = new AMap.Marker({
+                position: new AMap.LngLat(lnglat[0], lnglat[1]),
+                icon:zyzIcon,
+            });
+            marker.on('click',openInfo);
+            markers.push(marker);
+        };
 
-    function daiban(data) {
-        var dir = document.getElementById('Directives');
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].systemName == systemname && data[i].toRole == roleTopic) {
-                var p = document.createElement('button');
-                p.appendChild(document.createTextNode(data[i].text))
-                p.setAttribute("arg", data[i].id);
-                p.onclick = function (e) {
-                    console.log(e);
-                    console.log(this.getAttribute("arg"))
-                    $.get("/chat/todo/succ/" + this.getAttribute("arg"), function (data3) {
-                        console.log("remove");
-                    });
-                    $(this).remove();
-                };
-                dir.append(p);
-            }
+        // 创建覆盖物群组，并将 marker 传给 OverlayGroup
+        var overlayGroups = new AMap.OverlayGroup(markers);
+        // 添加覆盖物群组
+        map.add(overlayGroups);
+        //在指定位置打开信息窗体
+        function closeInfo() {
+            infoWindow.close();
         }
-    }
+        function openInfo() {
+            //构建信息窗体中显示的内容
+            var info = [];
+            info.push("<div class='input-card content-window-card'><div><img style=\"float:left;width:280px;height:160px\" src=\"../static/image/交警现场.png \"/></div> ");
+            // info.push("<div style=\"padding:7px 0px 0px 0px;\"><h4>高德软件</h4>");
+            info.push("<p class='input-item'>现场交警人数: 33人</p>");
+            info.push("<p class='input-item'>目前人流秩序较为稳定，不易发生踩踏事件</p></div></div>");
 
-    //展示数据
-    function showMsg(data) {
-        if (data.type == 1) {
-            // 普通消息
-            var responseData = document.getElementById('responseData');
-            var p = document.createElement('p');
-            p.appendChild(document.createTextNode(data.fromRole + ":" + data.text));
-            responseData.appendChild(p);
-        } else if (data.type == 2) {
-            var dir = document.getElementById('Directives');
-            var p = document.createElement('button');
-            p.appendChild(document.createTextNode(data.text))
-            p.setAttribute("arg", data.id);
-            p.onclick = function (e) {
-                $.get("/chat/todo/succ/" + this.getAttribute("arg"), function (data3) {
-                    console.log("remove");
-                });
-                $(this).remove();
-            };
-            dir.append(p)
-        } else if (data.type == 4) {
-            // 群发
-        }
-    }
+            infoWindow = new AMap.InfoWindow({
+                content: info.join("")  //使用默认信息窗体框样式，显示信息内容
+            });
 
-    function show_question(data) {
-        var a = document.getElementById("Question");
-        var html = '';
-        html += "<fieldset><p>" + data.question + "</p>";
-        if (data.right_answer == 'A') {
-            html += "<lable><input type='radio'  onclick='judgement(20)'/>" + data.answer_A + "</lable></br>";
-        } else {
-            html += "<lable><input type='radio'  onclick='judgement(0)'/>" + data.answer_A + "</lable></br>";
+            infoWindow.open(map, weizhi);
         }
-        ;
-        if (data.right_answer == 'B') {
-            html += "<lable><input type='radio'  onclick='judgement(20)'/>" + data.answer_B + "</lable></br>";
-        } else {
-            html += "<lable><input type='radio'  onclick='judgement(0)'/>" + data.answer_B + "</lable></br>";
-        }
-        ;
-        if (data.right_answer == 'C') {
-            html += "<lable><input type='radio' onclick='judgement(20)'/>" + data.answer_C + "</lable></br>";
-        } else {
-            html += "<lable><input type='radio' onclick='judgement(0)'/>" + data.answer_C + "</lable></br>";
-        }
-        ;
-        if (data.right_answer == 'D') {
-            html += "<lable><input type='radio'  onclick='judgement(20)'/>" + data.answer_D + "</lable></br>";
-        } else {
-            html += "<lable><input type='radio' onclick='judgement(0)'/>" + data.answer_D + "</lable></br>";
-        }
-        ;
-        html += "</fieldset>";
-        a.innerHTML += html;
-    }
-
-    function judgement(data) {
-        console.log(data)
-        $.get("/score/"+systemname+"/"+roleTopic+"/"+data,function (){
-
+        $('#removeOverlayGroup').click(function(){
+            map.remove(overlayGroups);
+            var pop = document.getElementById('road_msg');
+            pop.style.display="none";
         })
-    }
+    })
 
-    function sendMsg(toRoleTopic, eventType) {
-        if (eventType == 1) {
-            var content = document.getElementById('content').value;
-            var imessage = {};
-            imessage.systemName = systemname;
-            imessage.type = eventType;
-            imessage.toRole = toRoleTopic;
-            imessage.text = content;
-            imessage.fromRole = roleTopic;
-            imessage.dateTime = new Date();
-            showMsg(imessage);
-            stompClient.send("/topic/" + systemname + "/" + toRoleTopic, {}, JSON.stringify(imessage));
-        } else if (eventType == 2) {
-            var oOpt = document.getElementById('directives');
-            var oOptVal = oOpt.options[oOpt.selectedIndex].value;
-            // alert(oOptVal);
-            var imessage = {};
-            imessage.systemName = systemname;
-            imessage.type = eventType;
-            imessage.toRole = toRoleTopic;
-            imessage.text = oOptVal;
-            imessage.fromRole = roleTopic;
-            imessage.dateTime = new Date();
-            imessage.statue = 0;
-            // showMsg(imessage);
-            stompClient.send("/topic/" + systemname + "/" + toRoleTopic, {}, JSON.stringify(imessage));
-        }
 
-    }
-
-    //----新增信息的插入方法-----
-    function insertInfo(data) {
-        peoNum = data.numberOfPeopleList
-        deployNum = data.deployList
-        //根据id获取表单信息
-        for (var j = 0; j < peoNum.length; j++) {
-            document.getElementById('table').deleteRow(j + 1);
-            var arr = new Array();
-            arr[0] = peoNum[j].region;
-            arr[1] = peoNum[j].number;
-            arr[2] = peoNum[j].longitude;
-            arr[3] = peoNum[j].latitude;
-            arr[4] = peoNum[j].area;
-            arr[5] = peoNum[j].vicinity;
-            arr[6] = peoNum[j].status;
-            arr[7] = peoNum[j].systemName
-            var x = document.getElementById('table').insertRow(1); //获取第一行对象
-            for (var i = 0; i < arr.length; i++) {
-                x.insertCell(i).innerHTML = arr[i]; //用循环把每个数据插入第一行的每一列
-            }
-        }
-
-        for (var j = 0; j < deployNum.length; j++) {
-            document.getElementById('tableDeploy').deleteRow(j + 1);
-            var arr = new Array();
-            arr[0] = deployNum[j].ga;
-            arr[1] = deployNum[j].jj;
-            arr[2] = deployNum[j].cg;
-            arr[3] = deployNum[j].zyz;
-            arr[4] = deployNum[j].gaLng;
-            arr[5] = deployNum[j].gaLat;
-            arr[6] = deployNum[j].sysName
-            var x = document.getElementById('tableDeploy').insertRow(1); //获取第一行对象
-            for (var i = 0; i < arr.length; i++) {
-                x.insertCell(i).innerHTML = arr[i]; //用循环把每个数据插入第一行的每一列
-            }
-        }
-
-    }
 
 
 </script>
-<!--<script src="../js/chat.js"/>-->
-<!--<script src="../js/table.js"/>-->
-
-
 </body>
 </html>

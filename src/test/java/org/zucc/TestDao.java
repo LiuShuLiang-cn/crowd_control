@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.zucc.dao.*;
 import org.zucc.entity.Chat;
 import org.zucc.entity.Issue;
+import org.zucc.entity.Score;
 import org.zucc.entity.User;
 import org.zucc.service.IssueService;
 import org.zucc.service.NumberOfPeopleService;
@@ -38,7 +39,8 @@ public class TestDao {
             System.out.println(key);
         }
         System.out.println();
-//        redisTemplate.delete("zucc");
+        Boolean zucc = redisTemplate.delete("zujj");
+        System.out.println(zucc);
     }
 
     @Resource
@@ -115,7 +117,8 @@ public class TestDao {
     @Test
     void ScoreTest() {
         //scoreService.initScore("系统6841");
-        scoreService.setLoginRole("系统6841", "指挥中心", "1");
+        Score score = scoreService.setCurrentScore("系统6841", "指挥中心", 29);
+        System.out.println(score);
     }
 
     @Resource
@@ -171,7 +174,14 @@ public class TestDao {
 
     @Test
     public void test_3() {
-operateService.update("sss","busA");
+        Issue issue = issueService.getIssue("公安");
+        System.out.println(issue);
+    }
+
+    @Test
+    public void test_4() {
+        int count = issueService.getCount("系统6841", "指挥中心");
+        System.out.println(count);
     }
 
 }

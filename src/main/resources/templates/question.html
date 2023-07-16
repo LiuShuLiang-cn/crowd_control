@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"></script>
+  <script src="/static/layui/layui.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/static/layui/css/layui.css">
+  <style>
+    #answer{
+      display: none;
+    }
+    label{font-weight: bold;}
+    #color{
+      background:-webkit-linear-gradient(left,#147B96,#E6D205 25%,#147B96 50%,#E6D205 75%,#147B96);
+      color:transparent;
+      -webkit-background-clip:text;
+      background-size:200% 100%;
+      animation:masked-animation 1s infinite linear;
+    }
+    @-webkit-keyframes masked-animation {
+      100% {
+        background-position:-100% 0;
+      }
+    }
+  </style>
+
+</head>
+<body>
+<div style="width:800px; margin:40px auto;">
+  <form action="" >
+    <div class="layui-form">
+      <label class="layui-font-20" id="question">question</label>
+      <div class="layui-form">
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <input type="radio" lay-filter="wh1" name="wh1" value="A" title=" " id="ans_A">
+          </div>
+          <div class="layui-input-block">
+            <input type="radio" lay-filter="wh1" name="wh1" value="B" title="" id="ans_B">
+          </div>
+          <div class="layui-input-block">
+            <input type="radio" lay-filter="wh1" name="wh1" value="C" title="" id="ans_C">
+          </div>
+          <div class="layui-input-block">
+            <input type="radio" lay-filter="wh1" name="wh1" value="D" title="" id="ans_D">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="quesForm" id="btn_sub">确认</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div id="answer">
+    <p id="yours"></p>
+    <p style="color: red" id="right"></p>
+    <p id="prompt"></p>
+  </div>
+
+</div>
+
+<script>
+  let systemname;
+  let roleTopic;
+  let score;
+  let flag = false;
+  let count;
+  $.get("/user/currentuser", function (data) {
+    roleTopic = data.role
+    username = data.userName;
+    systemname = data.systemname;
+  })
+  $.get("/score/current/"+systemname+"/"+roleTopic+"/",function (data){
+    score =data.score;
+    console.log('获取score分数：'+score)
+  })
+  layui.use(['layer', 'element','form','jquery'], function(){
+    var $ = layui.jquery,
+            layer = layui.layer,
+            element = layui.element,
+            form = layui.form;
+    var right ;
+    var analysic;
+    $(function (){
+      $.ajax({
+        type:"get",
+        dataType: 'JSON',
+        url:"/issue/"+roleTopic,
+        async:false,
+        success:function(data){
+          $('#question').html(data.question);//html赋值
+          $('#ans_A').attr('title',data.answer_A)
+          $('#ans_B').attr('title',data.answer_B)
+          $('#ans_C').attr('title',data.answer_C)
+          $('#ans_D').attr('title',data.answer_D)
+          form.render(); //更新全部
+          layer.closeAll();//关闭所有layer层，防止重复弹窗
+          right = data.right_answer;
+          analysic = data.analysis;
+          $("#right").html("正确答案："+right)
+          $("#prompt").html(analysic)
+        },
+        error: function(){
+          layer.alert("查询错误！");
+        }
+      })
+    })
+
+    $('#btn_sub').on('click',function (){
+      document.getElementById("answer").style.display="block";
+      return false;//拒绝页面跳转
+    });
+
+    form.on('radio(wh1)', function (data){
+      $('#yours').html("您的答案是："+data.value)
+      // console.log(data.elem); //得到radio原始DOM对象
+      // console.log(data.value); //被点击的radio的value值
+      console.log('答案是否正确',right == data.value)
+      if (this.value !=0 &&flag == false) {
+        if(right==data.value) {
+          score+=5;
+        } else ;
+      }
+      flag = true;
+      $.get("/issue/count/",{"systemName":systemname,"roleTopic": roleTopic},function (data){
+        count = data;
+        console.log("弹出题目数量"+data)
+        console.log("弹出题目数量"+count)
+      })
+      if(count==10){
+        parent.layer.closeAll();//关闭所有layer层，防止重复弹窗
+        console.log(count)
+      }
+      if(right == data.value && count<10){
+        // form.render();
+        // parent.layer.close(layer.index);
+        $.get( "/score/update/",{"systemName": systemname,"roleTopic": roleTopic,"score": score},function (){
+          console.log('更新后的score分数：'+score)
+        })
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+        parent.layer.open({
+          type: 2,
+          title: '选择题',
+          content:['/user/question','no'] ,//不允许出现滚动条
+          area:['900px', '460px']
+        });
+      }
+
+    });
+
+  });
+
+
+
+</script>
+</body>
+</html>

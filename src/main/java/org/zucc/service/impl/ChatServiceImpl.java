@@ -10,23 +10,16 @@ import org.zucc.dao.ChatDao;
 import org.zucc.entity.Chat;
 import org.zucc.service.ChatService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 @Slf4j
 public class ChatServiceImpl extends ServiceImpl<ChatDao, Chat> implements ChatService {
-
+    @Resource
     private ChatDao chatDao;
-
+    @Autowired
     private SimpMessagingTemplate template;
-    @Autowired
-    public void setChatDao(ChatDao chatDao) {
-        this.chatDao = chatDao;
-    }
-    @Autowired
-    public void setTemplate(SimpMessagingTemplate template) {
-        this.template = template;
-    }
 
     @Override
     public void HandleMsg(Chat chat, String toRoleTopic, String systemName) {

@@ -1,0 +1,32 @@
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style-type: none;
+	text-decoration: none;
+}
+.showTime{
+	position: absolute; right: 180px; top: 20px;height: 20px;background-color: aqua;
+}
+.custom-input-card{
+	width: 18rem;
+}
+
+.custom-input-card .btn:last-child{
+	margin-left: 1rem;
+}
+
+.content-window-card{
+	position: relative;
+	width:20rem;
+	height: 12rem;
+	padding: 0.75rem 0 0 1.25rem;
+	box-shadow: none;
+	bottom: 0;
+	left: 0;
+}
+
+.content-window-card p{
+	float: left;
+	height: 2rem;
+}         

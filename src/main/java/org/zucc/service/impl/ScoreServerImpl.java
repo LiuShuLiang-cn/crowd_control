@@ -3,7 +3,6 @@ package org.zucc.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.zucc.dao.ScoreDao;
@@ -16,14 +15,10 @@ import javax.annotation.Resource;
 @Service
 @Slf4j
 public class ScoreServerImpl extends ServiceImpl<ScoreDao, Score> implements ScoreService {
-
+    @Resource
     private ScoreDao scoreDao;
     @Resource
     private RedisTemplate redisTemplate;
-    @Autowired
-    public void setScoreDao(ScoreDao scoreDao) {
-        this.scoreDao = scoreDao;
-    }
 
     @Override
     public void initScore(String systemName) {
@@ -65,12 +60,12 @@ public class ScoreServerImpl extends ServiceImpl<ScoreDao, Score> implements Sco
         设置当前用户的分数
          */
         Score score = getScoreBySystemRole(systemName, roleTopic);
-        score.setScore(fraction);
         if (fraction > score.getScore()) {
-            log.debug("得分：" + String.valueOf(fraction - score.getScore()));
+            log.debug("得分：{}", (fraction - score.getScore()));
         } else if (fraction < score.getScore()) {
-            log.debug("扣分：" + String.valueOf(score.getScore() - fraction));
+            log.debug("扣分：{}", (score.getScore() - fraction));
         }
+        score.setScore(fraction);
         baseMapper.updateById(score);
         countIssue(systemName, roleTopic);
         return score;
@@ -84,11 +79,11 @@ public class ScoreServerImpl extends ServiceImpl<ScoreDao, Score> implements Sco
         try {
             count = (int) redisTemplate.opsForValue().get(systemName + "-" + roleTopic);
         } catch (java.lang.NullPointerException e) {
-            count=0;
+            count = 0;
         }
         count++;
         redisTemplate.opsForValue().set(systemName + "-" + roleTopic, count);
-        log.info("已完成{}道题目",count);
+        log.info("已完成{}道题目", count);
     }
 
     private Score getScoreBySystemRole(String systemName, String roleTopic) {

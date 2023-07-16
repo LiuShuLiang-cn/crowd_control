@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<title>智慧步行街</title>
+		<!-- css文件 -->
+		<link href="/static/css/style.css" rel="stylesheet"/>
+		<link href="/static/css/layui.css" rel="stylesheet">
+		<!-- js文件 -->
+		<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"></script>
+		<script src="https://lib.baomitu.com/echarts/5.0.2/echarts.common.js"></script>
+		<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+		<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+		<script src="/static/js/chat.js" type="text/javascript"></script>
+		<script src="/static/layui/layui.js" type="text/javascript"></script>
+		<script src="/static/js/questions.js" type="text/javascript"></script>
+		<script src="/static/js/dropdown.js" type="text/javascript"></script>
+		<script src="/static/js/operate.js"></script>
+		<script src="/static/js/form.js"></script>
+		<!-- bootstrap -->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+		<section class="content">
+			<!-- 头部样式 -->
+		    <header class="top">
+				<h1 style="text-align: center;margin-top: 15px; font-size: 25px;">湖滨商圈跨年夜人流精细化管理虚拟仿真实验</h1>
+				<div class="showTime" style="position: absolute; right: 180px; top: 20px;"></div>
+				<div class="dropdown">
+					<button onclick="dropdown()" class="dropbtn">
+						<img src="/static/img/cr7.jpg">
+						<p id="roleContent">111</p>
+					</button>
+					  <div id="myDropdown" class="dropdown-content">
+					    <a href="#">System</a>
+					    <a href="#">Setting</a>
+					    <a href="login.html">Log Out</a>
+					  </div>
+				</div>
+			</header> 
+			<!-- 地图整体布局 -->
+			<div class="layui-col-md12 layui-col-xs12" style="height: 100%" id="container">
+			</div>
+			
+			<!-- 两侧布局 -->
+			<div class="layui-fluid" style="height: 100%;position: absolute;top: 70px;width: 100%;">
+			    <div class="layui-row layui-col-space10" style="height: 100%">
+					<!-- 左侧 -->
+			        <div id="leftChart" class="layui-col-md2 layui-col-xs2" >
+			           <!-- 图表一 -->
+						<div class="layui-col-md12 layui-col-xs12" style="height: 33.3%">
+			                <div class="layui-col-md12 layui-col-xs12" style="height: 14%;">
+								<h3>湖滨九里实时人流变化态势</h3></div>
+			                <div class="layui-col-md12 layui-col-xs12" style="height: 85%" id="realTime-stream-line">111</div>
+			            </div>
+						<!-- 图表二 -->
+			            <div class="layui-col-md12 layui-col-xs12" style="height: 33.3%">
+			                <div class="layui-col-md12 layui-col-xs12" style="height: 14%;">
+								<h3>湖滨九里每日峰值人流恢复监测</h3>
+							</div>
+			                <div class="layui-col-md12 layui-col-xs12" style="height: 85%" id="day-stream-line"></div>
+			            </div>
+			           <!-- 图表三 -->
+						<div class="layui-col-md12 layui-col-xs12" style="height: 33.3%">
+			                <div class="layui-col-md12 layui-col-xs12" style="height: 14%;">
+			                    <!-- style="height: 15%;margin-bottom: 8px;background: #3c82b8;display: inline-block;"> -->
+			                    <h3 class="layui-col-md12 layui-cols-xs12" >
+			                        天气预测情况
+			                    </h3>
+			                    <!-- <div class="layui-tab layui-tab-brief layui-col-md4 layui-col-xs4"
+			                         style="float: right;margin-right: 5px;">
+			                        <ul class=" layui-tab-title layui-col-md12 layui-col-xs12">
+			                            <li id="subHour" class=" layui-this layui-col-md4 layui-col-xs4">小时</li>
+			                            <li id="subDay" class="layui-col-md4 layui-col-xs4">日</li>
+			                            <li id="subMon" class="layui-col-md4 layui-col-xs4">月</li>
+			                        </ul>
+			                    </div> -->
+			                </div>
+			            </div>
+						<div id="policeManager">
+							<p>
+							  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+							    部署情况
+							  </a>
+							</p>
+							<div class="collapse" id="collapseExample">
+							  <div class="card card-body" id="card">
+								  <p>交警出动人数</p>
+								  <div id="jjgo"></div>
+								  <p>公安出动人数</p>
+								  <div id="gago"></div>
+								  <p>城管出动人数</p>
+								  <div id="cggo"></div>
+								  <p>志愿者出动人数</p>
+								  <div id="zyzgo"></div>
+							    <!-- Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. -->
+							  </div>
+							</div>
+						</div>
+						<div class="page" style="position: fixed; bottom: 0%;right:0%">
+						    <div class="container">
+						        <div class="btn" onclick="operate(this)" unfold="1">事件记录</div>
+						        <div class="options-container">
+						            <div class="options" id="options">
+										<p>111</p>
+										<p>222</p>
+<!--						                <p id="responseData"></p>-->
+						            </div>
+						        </div>
+						    </div>
+						</div>	
+			        </div>
+				</div>
+			</div>	
+
+		</section>
+		
+		<!-- 导入地图 -->
+		<script type="text/javascript"
+			src="https://webapi.amap.com/maps?v=1.4.15&key=a4e65c332b50b8e393abedd74d525dd5&plugin=AMap.Scale"></script>
+		<!-- UI组件库 1.0 突出湖滨地区，隐藏建筑物 -->
+		<script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+		<!-- 预加载iconfont的js 图标-->
+		<script src="//webapi.amap.com/ui/1.1/ui/overlay/SvgMarker/examples/my-iconfont.js?v=1.0.11"></script>
+		
+		<script th:inline=none>
+			// showMsg();
+			document.getElementById("roleContent").innerHTML=roleTopic;
+			var buildingLayer = new AMap.Buildings({ zIndex: 130, merge: false, sort: false, zooms: [17, 20] });
+			var map = new AMap.Map("container", {
+				viewMode: '3D',
+				zoom: 17,
+				zooms: [17, 20],
+				pitch: 60,
+				rotation: 0,
+				center: [120.1636, 30.251918],
+				resizeEnable: true,
+				dragEnable: true,
+				zoomEnable: true,
+				rotateEnable: true,
+				showLabel: false, //不显示地图文字标记
+				features: ['bg', 'point', 'road'],
+				layers: [
+					new AMap.TileLayer(),
+					buildingLayer,
+				],
+				scrollWheel: false,
+				mapStyle: 'amap://styles/3ca2e04069298d6b0b6b166e94803313',
+			});
+
+
+			// 九个里图标
+			AMapUI.loadUI(['overlay/SvgMarker','misc/PositionPicker'], function (SvgMarker,PositionPicker) {
+						if (!SvgMarker.supportSvg) {
+							alert('当前环境不支持SVG');
+						}
+
+						var lngLats = getGridLngLats(map.getCenter(), 2, 4, 200, 200);
+
+			
+						//1、钱塘里
+						var marker1 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								// 参见 symbol引用, http://www.iconfont.cn/plus/help/detail?helptype=code
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.160988, 30.257241],
+							label: {
+								content: '<div style="height: 19px;text-align: center;">钱塘里</div><div style="height: 19px;text-align: center;">1414人</div>',
+								offset: new AMap.Pixel(-15, -45)
+							}
+						});
+						//2、长生里
+						var marker2 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.163306, 30.256641],
+							label: {
+								content: '<div style="height: 19px;text-align: center;">长生里</div><div style="height: 19px;text-align: center;">4332人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//3、劝业里
+						var marker3 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.161679, 30.256041],
+							label: {
+								content: '<div style="height: 19px;text-align: center;">劝业里</div><div style="height: 19px;text-align: center;">1298人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//4、学士里
+						var marker4 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.162178, 30.254551],
+							label: {
+								content: '<div style="height: 19px;text-align: center;">学士里</div><div style="height: 19px;text-align: center;">2470人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//5、龙翔里
+						var marker5 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.163452, 30.254666],
+			
+							label: {
+								content: '<div style="height: 19px;text-align: center;">龙翔里</div><div style="height: 19px;text-align: center;">2138人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//6、仁和里
+						var marker6 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.162555, 30.252937],
+			
+							label: {
+								content: '<div style="height: 19px;text-align: center;">仁和里</div><div style="height: 19px;text-align: center;">592人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//7、东坡里
+						var marker7 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.163585, 30.252126],
+			
+							label: {
+								content: '<div style="height: 19px;text-align: center;">东坡里</div><div style="height: 19px;text-align: center;">3734人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//8、将军里
+						var marker8 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.162707, 30.249315],
+			
+							label: {
+								content: '<div style="height: 19px;text-align: center;">将军里</div><div style="height: 19px;text-align: center;">1515人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						//9、泗水里
+						var marker9 = new SvgMarker(
+							new SvgMarker.Shape.IconFont({
+								icon: 'icon-mapmarkerradius',
+								size: 50,
+								fillColor: 'green'
+							}), {
+							map: map,
+							position: [120.165169, 30.249562],
+			
+							label: {
+								content:'<div>泗水里<br>3048人</div>',
+								offset: new AMap.Pixel(-8, -35)
+							}
+						});
+						// 部署时依据经纬度获取地理位置信息
+						// var positionPicker = new PositionPicker({
+						// 	mode:'dragMarker',
+						// 	map:this.map
+						// });
+						// var jutilnglat;
+						// var nearestJunction;
+						// positionPicker.on('success', function(positionResult){
+						// 	// jutilnglat = positionResult.position;
+						// 	nearestJunction = positionResult.nearestJunction;
+						// 	console.log(nearestJunction);
+						// });
+						// positionPicker.on('fail', function(positionResult) {
+						// 	jutilnglat = '';
+						// 	nearestJunction = '';
+						// });
+						// var startButton = document.getElementById('bushu1');
+						// startButton.addEventListener('click', function() {
+						// 	positionPicker.start()
+						// });
+			});
+			function getGridLngLats(center, colNum, size, cellX, cellY) {
+				var pxCenter = map.lnglatToPixel(center);	
+				var rowNum = Math.ceil(size / colNum);		
+				var startX = pxCenter.getX(),
+					startY = pxCenter.getY();		
+				cellX = cellX || 70;		
+				cellY = cellY || 70;				
+				var lngLats = [];		
+				for (var r = 0; r < rowNum; r++) {		
+					for (var c = 0; c < colNum; c++) {		
+						var x = startX + (c - (colNum - 1) / 2) * (cellX);		
+						var y = startY + (r - (rowNum - 1) / 2) * (cellY);		
+						lngLats.push(map.pixelToLngLat(new AMap.Pixel(x, y)));		
+						if (lngLats.length >= size) {
+							break;
+						}
+					}
+				}
+				return lngLats;
+			}
+			// 地图样式修改+路线
+			var options =
+			{
+				hideWithoutStyle: false,//是否隐藏设定区域外的楼块
+				areas: [{ //围栏1:钱塘里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.158727, 30.258187], [120.158824, 30.257825], [120.158894, 30.257686], [120.15919, 30.257242], [120.159535, 30.2567], [120.159792, 30.256838], [120.159928, 30.256865], [120.162604, 30.256971], [120.16212, 30.257677], [120.161692, 30.258265], [120.158727, 30.258187]],
+				}, { //围栏2：长生里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.161691, 30.258263], [120.162321, 30.257394], [120.162608, 30.256964], [120.162739, 30.256673], [120.162797, 30.256506], [120.162844, 30.256068], [120.162868, 30.255538], [120.163513, 30.255564], [120.163983, 30.255533], [120.163845, 30.25834], [120.161691, 30.258263]],
+				},
+				{ //围栏3：劝业里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.159535, 30.2567], [120.159723, 30.256449], [120.159991, 30.256021], [120.160426, 30.255399], [120.160962, 30.255449], [120.161767, 30.255497], [120.162291, 30.255515], [120.162871, 30.255542], [120.162847, 30.256083], [120.162813, 30.256387], [120.162796, 30.25651], [120.162754, 30.256639], [120.162606, 30.256974], [120.159939, 30.256873], [120.159864, 30.256855], [120.15979, 30.256843], [120.159656, 30.256778], [120.159535, 30.2567]],
+				},
+				{ //围栏4：学士里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.160426, 30.255399], [120.160052, 30.255294], [120.160244, 30.254972], [120.160396, 30.254745], [120.160864, 30.254064], [120.160887, 30.253976], [120.160869, 30.253896], [120.160858, 30.253817], [120.160981, 30.253778], [120.161085, 30.253721], [120.161243, 30.253763], [120.161505, 30.253895], [120.162902, 30.253965], [120.162866, 30.255539], [120.16176, 30.255494], [120.160966, 30.255445], [120.160426, 30.255399]],
+			
+				},
+				{ //围栏5：龙翔里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.162869, 30.255537], [120.162866, 30.255539], [120.162903, 30.253962], [120.163085, 30.253999], [120.164052, 30.254045], [120.163991, 30.255534], [120.163513, 30.255565], [120.16286, 30.255538]],
+				},
+				{ //围栏6：仁和里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.1615, 30.253893], [120.16118, 30.253717], [120.161472, 30.253302], [120.161691, 30.252994], [120.161953, 30.252569], [120.162424, 30.251797], [120.162447, 30.251745], [120.162467, 30.251711], [120.162502, 30.251579], [120.162521, 30.251466], [120.163016, 30.25156], [120.16298, 30.252329], [120.162983, 30.252754], [120.162936, 30.253663], [120.162901, 30.253971], [120.1615, 30.253893]],
+				},
+				{ //围栏7：东坡里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.162902, 30.253965], [120.162941, 30.253674], [120.162989, 30.25275], [120.162981, 30.252332], [120.163013, 30.251545], [120.163013, 30.250886], [120.163, 30.250751], [120.162968, 30.250656], [120.163251, 30.250533], [120.163406, 30.250503], [120.164225, 30.250435], [120.164048, 30.254043], [120.163082, 30.254001], [120.162902, 30.253965]],
+				},
+				{ //围栏8：将军里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.164217, 30.250328], [120.163954, 30.250289], [120.163336, 30.250252], [120.163182, 30.250263], [120.162963, 30.250237], [120.1622, 30.249894], [120.162034, 30.249862], [120.161757, 30.249711], [120.161416, 30.24944], [120.161112, 30.249084], [120.160823, 30.248566], [120.161534, 30.248557], [120.162205, 30.24857], [120.163088, 30.248591], [120.164266, 30.248602], [120.164207, 30.249507], [120.164217, 30.250328]],
+				},
+				{ //围栏9：泗水里
+					visible: false,//是否可见
+					rejectTexture: true,//是否屏蔽自定义地图的纹理
+					color1: '#123A51',//楼顶颜色
+					color2: '#123A51',//楼面颜色
+					path: [[120.164301, 30.250335], [120.164342, 30.248594], [120.166338, 30.248584], [120.166357, 30.250424], [120.164301, 30.250335]],
+				},
+				]
+			};
+			buildingLayer.setStyle(options); //此配色优先级高于自定义mapStyle
+			map.addControl(new AMap.Scale())
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[0].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[1].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[2].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[3].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[4].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[5].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[6].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[7].path,
+				map: map
+			})
+			new AMap.Polygon({
+				bubble: true,
+				fillOpacity: 0,
+				fillColor: '#123A51',
+				strokeWeight: 6,
+				strokeColor: "#2b8ae5",
+				path: options.areas[8].path,
+				map: map
+			})
+
+
+		</script>
+	</body>
+</html>

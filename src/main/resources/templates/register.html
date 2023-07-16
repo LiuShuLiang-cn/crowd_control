@@ -1,18 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Register Page</title>
+    <title>注册</title>
+
+    <link href="/layui/css/login.css" rel="stylesheet">
+    <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"></script>
+
 </head>
 <body>
-<h2>注册:</h2>
-<form th:action="@{/user/register}" method="post">
-    <label>用户名</label><span id="noticeUserName"></span>
-    <input type="text" name="userName" required="" id="userName">
 
-    <label>密码</label><span id="noticePassword"></span>
-    <input type="password" name="password" required="" id="password">
-    <button type="submit" value="注册">注册</button>
-</form>
+<div class="login-box">
+    <h2>注册</h2>
+    <form th:action="@{/user/register}" id="registerForm" method="post">
+        <div class="user-box">
+            <input type="text" name="username" required="" id="userName">
+            <label>用户名</label><span id="noticeUserName"></span>
+        </div>
+
+        <div class="user-box">
+            <input type="password" name="password" required="" id="password">
+            <label>密码</label><span id="noticePassword"></span>
+        </div>
+        <label th:text="${error}"></label>
+        <a href="#" style="margin-left: 120px" onclick="register()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            注册
+        </a>
+        <a th:href="@{/user/loginview}" style="margin-left: 100px">返回登录</a>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    window.onkeydown = function (e) { //event可以简写成 e
+        if (e.keyCode === 13) {
+            register()
+        }
+        //console.log(e.key);//不喜欢弹窗的话 可以通过控制台输出查看信息
+    }
+
+    function checkUser() {
+        let username = $('#userName').val();
+        let password = $('#password').val();
+        let pattern = /^[A-Za-z0-9]+$/; //匹配数字和英文字母
+        if (username.length === 0) {
+            $('#noticeUserName').html("<b style='color: red;font-size: 12px'>用户名不能为空</b>")
+            return false
+        }
+
+        if (password.length === 0) {
+            $('#noticePassword').html("<b style='color: red;font-size: 12px'>密码不能为空</b>")
+        }
+        if (username.length !== 0) {
+            $.get("checkUser/" + username, function (data) {
+                if (data === 0) {
+                    $('#noticeUserName').html("<b style='color: red;font-size: 12px'>用户名已存在</b>")
+                    return false;
+                } else {
+                    if (!pattern.test(username)){
+                        $('#noticeUserName').html("<b style='color: red;font-size: 12px'>用户名只能由英文字母和数字构成</b>")
+                        console.log("用户名有其他字符出现")
+                        return false
+                    }
+                    else if (pattern.test(username)){
+                        $('#noticeUserName').html("")
+                    }
+                    if (password.length !== 0) {
+                        if (!pattern.test(password)){
+                            console.log("密码有其他字符出现")
+                            $('#noticePassword').html("<b style='color: red;font-size: 12px'>密码只能由英文字母和数字构成</b>")
+                            return false
+                        }
+                        else {
+                            console.log("这里一切正常")
+                            $('#noticePassword').html("")
+                        }
+                    }
+                }
+            })
+        }
+        return true
+
+    }
+
+    function register() {
+        let flag = checkUser()
+        console.log("flag====" + flag)
+        if (flag) {
+            console.log("可以注册了")
+            $("#registerForm").submit()
+        }
+    }
+
+    $(document).ready(function () {
+        $("#userName").blur(function () {
+            checkUser();
+        });
+        $("#password").blur(function () {
+            checkUser();
+        });
+    })
+
+</script>
+
 </body>
 </html>

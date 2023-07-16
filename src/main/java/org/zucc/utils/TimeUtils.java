@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @author Administrator
+ * 时间工具类
  */
 public class TimeUtils {
     public static String initTimes() throws ParseException {

@@ -1,0 +1,379 @@
+/* 基础样式 */
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style-type: none;
+	text-decoration: none;
+}
+.showTime{
+	position: absolute; right: 180px; top: 20px;height: 20px;background-color: aqua;
+}
+.custom-input-card{
+	width: 18rem;
+}
+
+.custom-input-card .btn:last-child{
+	margin-left: 1rem;
+}
+
+.content-window-card{
+	position: relative;
+	width:20rem;
+	height: 12rem;
+	padding: 0.75rem 0 0 1.25rem;
+	box-shadow: none;
+	bottom: 0;
+	left: 0;
+}
+
+.content-window-card p{
+	float: left;
+	height: 2rem;
+}         
+.content{
+	width: 100%;
+	height: 1000px;
+	/* background-color: aliceblue; */
+	background-image: url('../img/bg.jpg') no-repeat top center;
+}
+a,a:hover,a:focus {
+	text-decoration: none;
+	outline: none;
+}
+/* 地图内容样式 */
+ .amap-marker-label {
+	font-size: 15px;
+	font-weight: bold;
+	border: 1px solid rgb(0, 0, 0, 0.2);
+	background: rgba(0, 0, 0, 0.2);
+	color: #ffffff;
+	width: 65px;
+	height: 38px;
+	border-radius: 8px;
+	text-align: center;
+	line-height: 20px;
+}
+#deal.layui-col-md3.layui-col-xs3{
+	background-color: #e9e9e9;
+}
+/* 头部样式 */
+.top{
+	width: 100%;
+	height: 65px;
+	background-color: #3c82b8;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.dropdown {
+	position: relative;
+	float: right;
+	right: 30px;
+	top: -40px;
+	display: inline-block;
+}
+.dropbtn {
+	/* 文字垂直水平居中 */
+	background-color: #3c82b8;
+	border:1px solid #fff;
+	/* border: none; */
+	width: 150px;
+	height: 50px;
+	border-radius: 2px;
+	font-size: 16px;
+	cursor: pointer;
+	padding:0px;
+	font-size: 17px;
+	vertical-align:middle ;
+	line-height:40px;
+	margin:0px;
+}
+.dropbtn img{
+	float: left;
+	width: 50px;
+	height: 45px;
+	border-radius: 20px;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+	background-color: #2980B9;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-width: 160px;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 2;
+	text-align: center;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 14px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+/* 图表地图样式 */
+#leftChart{
+	height: 100% ;
+	background-color: #fff;
+	text-align: center;
+	left: -5px;
+	top: 5px;
+}
+#leftChart h3{
+	color: #FFFFFF;
+	text-align:center;
+	top: 50px;
+	background: #3c82b8;
+	height: 100%;
+	line-height:40px;
+	font-size: 1.0em;
+}
+#rightChart{
+	height: 100%;
+	float: right;
+	right: -10px;
+}
+#rightChart h3{
+	color: #FFFFFF;
+	text-align:center;
+	vertical-align:middle;
+	background: #3c82b8;
+	height: 40px;
+	line-height:40px;
+	font-size: 1.1em;
+	width: 96%;
+	margin: 0 auto;
+}
+/* 中间按钮面板切换 */
+ .button, .managebutton {
+	/* background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%); */
+	background-color: #ddd;
+	width: 115px;
+	height: 35px;
+	/* 四个div并排显示 */
+	position: float;
+	display: inline-block;
+	margin-top: 30px;
+	margin-left: 70px;
+	text-align: center;
+	line-height: 16px;
+	font-size: 19px;
+	transform: skewX(-45deg);
+	opacity: 0.8;
+	cursor: pointer;
+}
+.managebutton:active,.button:active{
+	background-color: #55aaff;
+	opacity: 0.6;
+}
+.managebutton:focus,.button:focus{
+	background-color: #55aaff;
+	opacity: 0.6;
+}
+.managebutton>div,.button>div {
+	color: black;
+	transform: skewX(45deg);
+}
+/* 人流管理隐藏div */ 
+#person{
+	width: 600px;
+	height: 100px;
+	/* color: #FFFFFF; */
+	position: absolute;
+	left: 15%;
+	margin-top: 30px;
+	opacity: 0.7;
+	z-index: 5;
+	display: none;
+}
+#person:target{
+	display: block;
+}
+#personCount{
+	/* border-radius: 5px; */
+	display: inline-block;
+	text-align: center;
+	line-height: 40px;
+	width: 180px;
+	height: 90px;
+	font-size: 19px;
+	position: fixed;
+	left: 400px;
+	background-color: #61a6ff;
+	z-index: 16;
+}
+#personCount1{
+	display: inline-block;
+	text-align: center;
+	line-height: 40px;
+	width: 180px;
+	height: 90px;
+	font-size: 19px;
+	position: fixed;
+	left: 700px;
+	background-color: aquamarine;
+	z-index: 6;
+}
+/* 部署指令图标 */
+#conversationDiv{
+	font-size: 17.5px;
+}
+#conversationDiv .layui-inline{
+	left: 8px;
+	padding: 3px 0px;
+	/* top: 15px; */
+}
+#conversationDiv img{
+	width: 25px;
+	height: 25px;
+	border-radius: 1px;
+	
+}
+#conversationDiv #btn_form{
+	position: relative;
+	height: 30px;
+	top: -3px;
+	left: 5px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 16.5px;
+}
+#addOverlayGroup, #removeOverlayGroup{
+	text-align: center;
+	font-size: 17px;
+	top: 5px;
+	position: relative;
+	left: 60px;
+}
+/* 路口部署情况 */
+#road_msg{
+	background-color: #FFFFFF;
+	position: relative;
+	left: 520px;
+	width: 280px;
+	top: 20px;
+	height: 270px;
+	border-radius: 4px;
+	opacity: 0.9;
+	display: none;
+}
+#road_msg img{
+	width: 260px;
+	height: 180px;
+}
+/* 市民功能面板 */
+.moveto{
+	top: 10%;
+	width: 360px;
+	height:260px;
+	background-color: #fff;
+	position: fixed;
+	right: 10px;
+	border-radius: 5px;
+}
+/* 主办方功能模块 */
+/* 收缩面板\事件记录 */
+.page{
+	width: 360px;
+	padding: 10px 20px;
+	border: 1px solid #eee;
+	background-color: #FFFFFF;
+	border-radius: 2px;
+}
+.container, .options-container {
+	overflow: hidden;
+}
+.options-container{
+	height: 0;
+}
+.container .options{
+	transition: all .5s;
+	transform: translateY(-100%); 
+}
+.container .unfold{
+	transform: translateY(0); 
+}
+.container > .btn{
+	color: #4C98F7;
+	cursor: pointer;
+	text-decoration: underline;
+}
+/* 喷泉开关 */
+#sponser_control{
+	top: 15%;
+	width: 200px;
+	height:120px;
+	background-color: #fff;
+	position: fixed;
+	right: 100px;
+	border-radius: 5px;
+}
+/* 视频监控 */
+#myVedio{
+	position: fixed;
+	top: 30%;
+	right: 1%;
+	width: 480px;
+	height: 350px;
+	background: rgba(0, 0, 0, .85);
+	display: none;
+}
+#video-close{
+	color: #211d1e;
+	position: absolute;
+	cursor: pointer;
+	right: 5px;
+}
+#myVedio video{
+	outline: none;
+	max-width: 99%;
+	max-height: 90vh;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 20px 40px rgb(0 0 0 / 50%);
+}
+/* 公交地铁控制台 */
+#sub_control{
+	top: 12%;
+	width: 370px;
+	height:380px;
+	background-color: #fff;
+	position: fixed;
+	right: 10px;
+	border-radius: 5px;
+}
+#sub_control p{
+	font-size: 18px;
+	text-align: center;
+}
+#sub_control .layui-form-item{
+	position: relative;
+	top: -15px;
+}
+#sub_control .layui-form-label{
+	width: 120px;
+	left: -10px;
+}
+/* 公安 城管 交警 */
+#policeManager{
+	top: 10%;
+	width: 360px;
+	height:260px;
+	background-color: #fff;
+	position: fixed;
+	right: 10px;
+	border-radius: 5px;
+}
