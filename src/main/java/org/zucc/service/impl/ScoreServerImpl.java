@@ -33,7 +33,7 @@ public class ScoreServerImpl extends ServiceImpl<ScoreDao, Score> implements Sco
         /*
         每个角色登陆时设置用户名
          */
-        scoreDao.update(systemName, role, userName);
+        scoreDao.update_score(systemName, role, userName);
     }
 
     @Override

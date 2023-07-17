@@ -10,10 +10,10 @@ import org.zucc.entity.Score;
 @Mapper
 public interface ScoreDao extends BaseMapper<Score> {
     @Insert("INSERT into user_score(systemName,role,score) values(#{systemName},#{role},#{score})")
-    void insert(String systemName, String role, int score);
+    void insert_score(String systemName, String role, int score);
 
     @Update("update user_score set username=#{userName} where systemName=#{systemName} and role=#{role}")
-    void update(String systemName, String role, String userName);
+    void update_score(String systemName, String role, String userName);
 
     @Insert("insert into user_score(systemName,role,score)\n" +
             "values(#{systemName},'指挥中心',0),(#{systemName},'交警',0),\n" +
